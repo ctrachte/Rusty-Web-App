@@ -20,7 +20,7 @@
      </header>
      <h1>Black&White Buttons</h1>
      <div class="center-text center">
-      <a class="center-text" href="https://codepen.io/yuhomyan/pen/LYNVVNO">CodePen by Yuhomyan</a>
+      <a class="center-text" href="https://codepen.io/yuhomyan">CodePen by Yuhomyan</a>
      </div> 
      <p>Hover us and enjoy the satisfying animation designs!</p>
      <div class="frame">
@@ -48,7 +48,10 @@
     <script>
       let buttons = document.getElementsByTagName('BUTTON');
       for (button of buttons) {
-        button.onclick = (event) => window.location.href = "https://codepen.io/yuhomyan/pen/LYNVVNO";
+        button.onclick = (event) => window.open(
+          'https://codepen.io/yuhomyan/pen/LYNVVNO',
+          '_blank'
+        );
       };
     </script>
 </body>
