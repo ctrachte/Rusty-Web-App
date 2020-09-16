@@ -10,10 +10,15 @@ fn index() -> &'static str {
 }
 
 #[get("/hello/<name>")]
-fn hello(name: &RawStr) -> String {
+fn hello_name(name: &RawStr) -> String {
     format!("Hello, {}!", name.as_str())
 }
 
+#[get("/hello")]
+pub fn hello() -> &'static str {
+    "Hello, outside world!"
+}
+
 fn main() {
-    rocket::ignite().mount("/", routes![index, hello]).launch();
+    rocket::ignite().mount("/", routes![index, hello, hello_name]).launch();
 }
