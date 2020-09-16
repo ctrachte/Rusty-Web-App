@@ -3,10 +3,11 @@
 #[macro_use] extern crate rocket;
 
 use rocket::http::RawStr;
+use rocket::response::NamedFile;
 
 #[get("/")]
-fn index() -> &'static str {
-    "Hello, world!"
+fn index() -> Option<NamedFile> {
+    NamedFile::open("static/index.html").ok()
 }
 
 #[get("/hello/<name>")]
