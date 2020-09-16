@@ -18,9 +18,10 @@
         <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet">
      </header>
-     
      <h1>Black&White Buttons</h1>
-     <a href="https://codepen.io/yuhomyan/pen/LYNVVNO">CodePen by Yuhomyan</a>
+     <div class="center-text center">
+      <a class="center-text" href="https://codepen.io/yuhomyan/pen/LYNVVNO">CodePen by Yuhomyan</a>
+     </div> 
      <p>Hover us and enjoy the satisfying animation designs!</p>
      <div class="frame">
        <button class="custom-btn btn-1">Read More</button>
@@ -44,5 +45,11 @@
      </div>
      
     </main>
+    <script>
+      let buttons = document.getElementsByTagName('BUTTON');
+      for (button of buttons) {
+        button.onclick = (event) => window.location.href = "https://codepen.io/yuhomyan/pen/LYNVVNO";
+      };
+    </script>
 </body>
 </html>

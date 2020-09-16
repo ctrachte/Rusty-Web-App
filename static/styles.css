@@ -1,3 +1,12 @@
+.center {
+  margin: 0 auto;
+  width: 50%;
+}
+
+.center-text {
+  text-align: center;
+}
+
 body {
     background: #e0e5ec;
   }
