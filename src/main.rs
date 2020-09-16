@@ -4,6 +4,7 @@
 
 use rocket::http::RawStr;
 use rocket::response::NamedFile;
+use rocket_contrib::serve::StaticFiles;
 
 #[get("/")]
 fn index() -> Option<NamedFile> {
@@ -21,5 +22,8 @@ pub fn hello() -> &'static str {
 }
 
 fn main() {
-    rocket::ignite().mount("/", routes![index, hello, hello_name]).launch();
+    rocket::ignite()
+    .mount("/", routes![index, hello, hello_name])
+    .mount("/static", StaticFiles::from("static"))
+    .launch();
 }
