@@ -41,7 +41,13 @@ fn count(hit_count: State<HitCount>) -> String {
 
 fn main() {
     rocket::ignite()
-    .mount("/", routes![index, hello, hello_name, visitors, count])
+    .mount("/", routes![
+        index,
+        hello, 
+        hello_name, 
+        visitors,
+        count
+        ])
     .mount("/static", StaticFiles::from("static"))
     .manage(HitCount(AtomicUsize::new(0)))
     .launch();
