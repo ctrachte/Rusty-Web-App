@@ -3,7 +3,14 @@
 #[macro_use] extern crate rocket;
 
 use rocket::http::RawStr;
+//A RawStr is an unsanitzed, unvalidated, and undecoded raw string from an HTTP message.
+// It exists to separate validated string inputs, represented by the String, &str,
+//  and Cow<str> types, from unvalidated inputs, represented by &RawStr.
 use rocket::response::NamedFile;
+// response = Types and traits to build and send responses.
+//  The return type of a Rocket handler can be any type that implements the Responder trait,
+//  which means that the type knows how to generate a [Response].
+// NamedFile = A file with an associated name; responds with the Content-Type based on the file extension.
 use rocket_contrib::serve::StaticFiles;
 use rocket::State;
 use std::sync::atomic::{AtomicUsize, Ordering};
