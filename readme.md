@@ -1,4 +1,4 @@
-## A Rusty Web App 
+# A Rusty Web App 
 by Caleb Trachte
 
 A simple web-app built with Rust, Rocket.rs, and a few basic dependencies. Meant to be used for educational purposes at Central Arkansas JavaScript's 10-15-2020 online meetup event.
@@ -14,4 +14,4 @@ A simple web-app built with Rust, Rocket.rs, and a few basic dependencies. Meant
 - serde_json v"1.0"
 
 ## Contributing
-- This project is being somewhat actively maintained and pull requests will be reviewed/accepted primarily for the [2020 Hacktoberfest event sponsored by Digital Ocean](https://hacktoberfest.digitalocean.com/).
+This project is being somewhat actively maintained and pull requests will be reviewed/accepted primarily for the [2020 Hacktoberfest event sponsored by Digital Ocean](https://hacktoberfest.digitalocean.com/).
