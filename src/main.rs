@@ -54,9 +54,9 @@ fn form() -> Option<NamedFile> {
     NamedFile::open("static/Form.html").ok()
 }
 
-#[post("/form", data = "<sink>")]
-fn sink(sink: Result<Form<FormInput>, FormError>) -> String {
-    match sink {
+#[post("/form", data = "<form>")]
+fn test_form(form: Result<Form<FormInput>, FormError>) -> String {
+    match form {
         Ok(form) => format!("{:?}", &*form),
         Err(FormDataError::Io(_)) => format!("Form input was invalid UTF-8."),
         Err(FormDataError::Malformed(f)) | Err(FormDataError::Parse(_, f)) => {
@@ -85,6 +85,7 @@ fn main() {
     .mount("/", routes![
         index,
         form,
+        test_form,
         hello, 
         hello_name, 
         visitors,
