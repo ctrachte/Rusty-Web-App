@@ -8,6 +8,10 @@ Simple web app built using Rocket.rs, loosely based on the tutorial they provide
 - rocket v"0.4.5"
 - rocket_contrib v"0.4.5"
     - *This crate contains officially sanctioned contributor libraries that provide functionality commonly used by Rocket applications.*
+    - features: "serve", "handlebars_templates"
+- serde v"1.0"
+- serde_derive v"1.0"
+- serde_json v"1.0"
 
 ## Contributing
 - This project is being somewhat actively maintained and pull requests will be reviewed primarily for the 2020 Hacktoberfest event, sponsored by Digital Ocean.
