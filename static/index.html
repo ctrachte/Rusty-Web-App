@@ -24,8 +24,8 @@
      </div> 
      <p>Hover us and enjoy the satisfying animation designs!</p>
      <div class="frame">
-       <button class="custom-btn btn-1">Read More</button>
-       <button class="custom-btn btn-2">Read More</button>
+       <button onclick="window.location.href='/hello'" class="custom-btn btn-1">Hello World!</a>
+       <button onclick="window.location.href='/hello/john doe'" class="custom-btn btn-2">Hello (name)</a>
        <button class="custom-btn btn-3"><span>Read More</span></button>
        <button class="custom-btn btn-4">Read More</button>
        <button class="custom-btn btn-5"><span>Read More</span></button>
@@ -46,13 +46,13 @@
      
     </main>
     <script>
-      let buttons = document.getElementsByTagName('BUTTON');
-      for (button of buttons) {
-        button.onclick = (event) => window.open(
-          'https://codepen.io/yuhomyan/pen/LYNVVNO',
-          '_blank'
-        );
-      };
+      // let buttons = document.getElementsByTagName('BUTTON');
+      // for (button of buttons) {
+      //   button.onclick = (event) => window.open(
+      //     'https://codepen.io/yuhomyan/pen/LYNVVNO',
+      //     '_blank'
+      //   );
+      // };
     </script>
 </body>
 </html>
