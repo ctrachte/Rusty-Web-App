@@ -15,6 +15,7 @@ use rocket_contrib::serve::StaticFiles;
 use rocket::State;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use rocket::response::content;
+use rocket::request::{Form, FormError, FormDataError};
 
 #[get("/")]
 fn index() -> Option<NamedFile> {
@@ -29,6 +30,39 @@ fn hello_name(name: &RawStr) -> String {
 #[get("/hello")]
 pub fn hello() -> &'static str {
     "Hello, outside world!"
+}
+
+#[derive(Debug, FromFormValue)]
+enum FormOption {
+    A, B, C
+}
+
+#[derive(Debug, FromForm)]
+struct FormInput<'r> {
+    checkbox: bool,
+    number: usize,
+    #[form(field = "type")]
+    radio: FormOption,
+    password: &'r RawStr,
+    #[form(field = "textarea")]
+    text_area: String,
+    select: FormOption,
+}
+
+#[get("/form")]
+fn form() -> Option<NamedFile> {
+    NamedFile::open("static/Form.html").ok()
+}
+
+#[post("/form", data = "<form>")]
+fn test_form(form: Result<Form<FormInput>, FormError>) -> String {
+    match form {
+        Ok(form) => format!("{:?}", &*form),
+        Err(FormDataError::Io(_)) => format!("Form input was invalid UTF-8."),
+        Err(FormDataError::Malformed(f)) | Err(FormDataError::Parse(_, f)) => {
+            format!("Invalid form input: {}", f)
+        }
+    }
 }
 
 struct HitCount(AtomicUsize);
@@ -50,6 +84,8 @@ fn main() {
     rocket::ignite()
     .mount("/", routes![
         index,
+        form,
+        test_form,
         hello, 
         hello_name, 
         visitors,
