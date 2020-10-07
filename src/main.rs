@@ -22,6 +22,11 @@ fn index() -> Option<NamedFile> {
     NamedFile::open("static/index.html").ok()
 }
 
+#[get("/form")]
+fn form() -> Option<NamedFile> {
+    NamedFile::open("static/Form.html").ok()
+}
+
 #[get("/hello/<name>")]
 fn hello_name(name: &RawStr) -> String {
     format!("Hello, {}!", name.as_str())
@@ -79,6 +84,7 @@ fn main() {
     rocket::ignite()
     .mount("/", routes![
         index,
+        form,
         hello, 
         hello_name, 
         visitors,
