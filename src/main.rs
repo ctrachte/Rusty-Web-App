@@ -68,7 +68,7 @@ fn wow_helper(
     _: &Handlebars,
     _: &Context,
     _: &mut RenderContext,
-    out: &mut Output
+    out: &dyn Output
 ) -> HelperResult {
     if let Some(param) = h.param(0) {
         out.write("<b><i>")?;
