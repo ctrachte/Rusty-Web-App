@@ -22,11 +22,6 @@ fn index() -> Option<NamedFile> {
     NamedFile::open("static/index.html").ok()
 }
 
-#[get("/form")]
-fn form() -> Option<NamedFile> {
-    NamedFile::open("static/Form.html").ok()
-}
-
 #[get("/hello/<name>")]
 fn hello_name(name: &RawStr) -> String {
     format!("Hello, {}!", name.as_str())
@@ -54,7 +49,12 @@ struct FormInput<'r> {
     select: FormOption,
 }
 
-#[post("/", data = "<sink>")]
+#[get("/form")]
+fn form() -> Option<NamedFile> {
+    NamedFile::open("static/Form.html").ok()
+}
+
+#[post("/form", data = "<sink>")]
 fn sink(sink: Result<Form<FormInput>, FormError>) -> String {
     match sink {
         Ok(form) => format!("{:?}", &*form),

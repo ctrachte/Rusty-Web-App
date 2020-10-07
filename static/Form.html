@@ -1,6 +1,6 @@
 <h1>Rocket Form Example</h1>
 
-<form action="/" method="post" accept-charset="utf-8">
+<form action="/form" method="post" accept-charset="utf-8">
   <label>Checkbox:
     <input type="checkbox" name="checkbox" value="on">
   </label><br /><br />
@@ -14,15 +14,15 @@
   </label>
   <br /><br />
 
-  <label for="type">Type:
-    <label for="a">A
-      <input type="radio" name="type" id="a" value="a" />
+  <label for="type">Radio Buttons:
+    <label for="a">Yes
+      <input type="radio" name="type" id="Yes" value="Yes" />
     </label>
-    <label for="b">B
-      <input type="radio" name="type" id="b" value="b" checked />
+    <label for="b">No
+      <input type="radio" name="type" id="No" value="No" checked />
     </label>
-    <label for="c">C
-      <input type="radio" name="type" id="c" value="c" />
+    <label for="c">Maybe
+      <input type="radio" name="type" id="Undecided" value="Undecided" />
     </label>
   </label>
   <br /><br />
@@ -32,17 +32,19 @@
   </label>
   <br /><br />
 
-  <label>Select:
+  <label>Answer:
     <select name="select">
-      <option value="a">Value A</option>
-      <option value="b" selected>Value B</option>
-      <option value="c">Value C</option>
+      <option value="1">Value 1</option>
+      <option value="2" selected>Value 2</option>
+      <option value="3">Value 3</option>
+      <option value="4">Value 4</option>
+      <option value="5">Value 5</option>
     </select>
   </label>
   <br /><br />
 
   <label>Submit:
-    <input type="submit" value="Login">
+    <input type="submit" value="Submit">
   </label>
   <br /><br />
 </form>
