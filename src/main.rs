@@ -37,7 +37,7 @@ fn handlebars() -> Redirect {
 }
 
 #[get("/hello/<name>")]
-fn hello(name: String) -> Template {
+fn hello_name(name: String) -> Template {
     Template::render("index", &TemplateContext {
         title: "Hello",
         name: Some(name),
@@ -97,10 +97,10 @@ fn index() -> Option<NamedFile> {
 //     format!("Hello, {}!", name.as_str())
 // }
 
-// #[get("/hello")]
-// pub fn hello() -> &'static str {
-//     "Hello, outside world!"
-// }
+#[get("/hello")]
+pub fn hello() -> &'static str {
+    "Hello, outside world!"
+}
 
 #[derive(Debug, FromFormValue)]
 enum FormOption {
@@ -157,6 +157,7 @@ fn main() {
         form,
         test_form,
         hello,
+        hello_name,
         about,
         visitors,
         count
