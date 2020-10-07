@@ -16,6 +16,8 @@ use rocket::State;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use rocket::response::content;
 use rocket::request::{Form, FormError, FormDataError};
+use rocket_contrib::templates::{Template, handlebars};
+use handlebars::{Helper, Handlebars, Context, RenderContext, Output, HelperResult, JsonRender};
 
 #[get("/")]
 fn index() -> Option<NamedFile> {
