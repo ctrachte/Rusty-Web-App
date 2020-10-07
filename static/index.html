@@ -18,17 +18,21 @@
         <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet">
      </header>
-     <h1>Black&White Buttons</h1>
+     <h1>A Rocket WebApp Demo</h1>
      <div class="center-text center">
-      <a class="center-text" href="https://codepen.io/yuhomyan">CodePen by Yuhomyan</a>
+      <a class="center-text" href="https://codepen.io/yuhomyan">Buttons CodePen by Yuhomyan</a>
+     </div>
+     <br/>
+     <div class="center-text center">
+      <a class="center-text" href="https://github.com/ctrachte/Rusty-Web-App">WebApp by Caleb Trachte</a>
      </div> 
      <p>Hover us and enjoy the satisfying animation designs!</p>
      <div class="frame">
-       <button class="custom-btn btn-1">Read More</button>
-       <button class="custom-btn btn-2">Read More</button>
-       <button class="custom-btn btn-3"><span>Read More</span></button>
-       <button class="custom-btn btn-4">Read More</button>
-       <button class="custom-btn btn-5"><span>Read More</span></button>
+       <button onclick="window.location.href='/hello'" class="custom-btn btn-1">Hello World!</a>
+       <button onclick="window.location.href='/hello/john doe'" class="custom-btn btn-2">Hello (name)</a>
+       <button onclick="window.location.href='/form'" class="custom-btn btn-3"><span>Form Example</span></button>
+       <button onclick="window.location.href='/visitors'" class="custom-btn btn-4">Visitor Count</button>
+       <button onclick="window.location.href='/'" class="custom-btn btn-5"><span>Home</span></button>
        <button class="custom-btn btn-6"><span>Read More</span></button>
        <button class="custom-btn btn-7">Read More</button>
        <button class="custom-btn btn-8">Read More</button>
@@ -39,20 +43,20 @@
        <button class="custom-btn btn-13">Read More</button>
        <button class="custom-btn btn-14">Read More</button>
        <button class="custom-btn btn-15">Read More</button>
-       <button class="custom-btn btn-16">Read More</button>
+       <button class="custom-btn btn-16">Read More!</button>
        <p style="font-family: Andale Mono, monospace;">
          DEERBUCKS.DESIGNING</p>
      </div>
      
     </main>
     <script>
-      let buttons = document.getElementsByTagName('BUTTON');
-      for (button of buttons) {
-        button.onclick = (event) => window.open(
-          'https://codepen.io/yuhomyan/pen/LYNVVNO',
-          '_blank'
-        );
-      };
+      // let buttons = document.getElementsByTagName('BUTTON');
+      // for (button of buttons) {
+      //   button.onclick = (event) => window.open(
+      //     'https://codepen.io/yuhomyan/pen/LYNVVNO',
+      //     '_blank'
+      //   );
+      // };
     </script>
 </body>
 </html>
