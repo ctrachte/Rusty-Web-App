@@ -14,4 +14,4 @@ A simple web-app built with Rust, Rocket.rs, and a few basic dependencies. Meant
 - serde_json v"1.0"
 
 ## Contributing
-This project is being somewhat actively maintained and pull requests will be reviewed/accepted primarily for the [2020 Hacktoberfest event sponsored by Digital Ocean](https://hacktoberfest.digitalocean.com/).
+This project is being actively maintained for the [2020 Hacktoberfest event sponsored by Digital Ocean](https://hacktoberfest.digitalocean.com/) and pull requests will be reviewed/accepted during this period only.
