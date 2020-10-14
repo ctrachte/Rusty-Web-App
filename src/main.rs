@@ -13,13 +13,18 @@ use rocket::response::NamedFile;
 //  which means that the type knows how to generate a [Response].
 // NamedFile = A file with an associated name; responds with the Content-Type based on the file extension.
 use rocket_contrib::serve::StaticFiles;
+// Serve = Custom handler and options for static file serving.
+// This handler makes it simple to serve static files from a directory on the local file system. 
+// To use it, construct a StaticFiles using either [StaticFiles::from()] or [StaticFiles::new()] then simply mount the handler at a desired path.
+// When mounted, the handler will generate route(s) that serve the desired static files.
 use rocket::Request;
 use rocket::response::Redirect;
 use rocket::State;
-use std::sync::atomic::{AtomicUsize, Ordering};
 use rocket::response::content;
 use rocket::request::{Form, FormError, FormDataError};
 use rocket_contrib::templates::{Template, handlebars};
+
+use std::sync::atomic::{AtomicUsize, Ordering};
 use handlebars::{Helper, Handlebars, Context, RenderContext, Output, HelperResult, JsonRender};
 
 #[derive(Serialize)]
@@ -31,11 +36,36 @@ struct TemplateContext {
     parent: &'static str,
 }
 
+struct HitCount(AtomicUsize);
+//An integer type which can be safely shared between threads.
+// This type has the same in-memory representation as the underlying integer type,
+// usize. For more about the differences between atomic types and non-atomic types
+ // as well as information about the portability of this type, please see the module-level documentation.
+
+#[derive(Debug, FromFormValue)]
+enum FormOption {
+    A, B, C
+}
+
+#[derive(Debug, FromForm)]
+struct FormInput<'r> {
+    checkbox: bool,
+    number: usize,
+    #[form(field = "type")]
+    radio: FormOption,
+    password: &'r RawStr,
+    #[form(field = "textarea")]
+    text_area: String,
+    select: FormOption,
+}
+
+// route demonstrating handlebars templating
 #[get("/handlebars")]
 fn handlebars() -> Redirect {
     Redirect::to("/hello/Caleb_Trachte")
 }
 
+// route that templates a custom name query string
 #[get("/hello/<name>")]
 fn hello_name(name: String) -> Template {
     Template::render("index", &TemplateContext {
@@ -46,6 +76,7 @@ fn hello_name(name: String) -> Template {
     })
 }
 
+// basic "about" route that demonstrates templating with handlebars
 #[get("/about")]
 fn about() -> Template {
     Template::render("about", &TemplateContext {
@@ -56,6 +87,7 @@ fn about() -> Template {
     })
 }
 
+// 404 catch helper route
 #[catch(404)]
 fn not_found(req: &Request) -> Template {
     let mut map = std::collections::HashMap::new();
@@ -75,7 +107,6 @@ fn wow_helper(
         out.write(&param.value().render())?;
         out.write("</b></i>")?;
     }
-
     Ok(())
 }
 
@@ -102,22 +133,6 @@ pub fn hello() -> &'static str {
     "Hello, outside world!"
 }
 
-#[derive(Debug, FromFormValue)]
-enum FormOption {
-    A, B, C
-}
-
-#[derive(Debug, FromForm)]
-struct FormInput<'r> {
-    checkbox: bool,
-    number: usize,
-    #[form(field = "type")]
-    radio: FormOption,
-    password: &'r RawStr,
-    #[form(field = "textarea")]
-    text_area: String,
-    select: FormOption,
-}
 
 #[get("/form")]
 fn form() -> Option<NamedFile> {
@@ -134,8 +149,6 @@ fn test_form(form: Result<Form<FormInput>, FormError>) -> String {
         }
     }
 }
-
-struct HitCount(AtomicUsize);
 
 #[get("/visitors")]
 fn visitors(hit_count: State<HitCount>) -> content::Html<String> {
