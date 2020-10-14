@@ -20,10 +20,14 @@ use rocket_contrib::serve::StaticFiles;
 use rocket::Request;
 use rocket::response::Redirect;
 use rocket::State;
+//Request guard to retrieve managed state.
+//This type can be used as a request guard to retrieve the state Rocket is managing for some type T. 
+//This allows for the sharing of state across any number of handlers.
+ //A value for the given type must previously have been registered to be managed by Rocket via Rocket::manage(). 
+ //The type being managed must be thread safe and sendable across thread boundaries. In other words, it must implement [Send] + [Sync] + 'static.
 use rocket::response::content;
 use rocket::request::{Form, FormError, FormDataError};
 use rocket_contrib::templates::{Template, handlebars};
-
 use std::sync::atomic::{AtomicUsize, Ordering};
 //An integer type which can be safely shared between threads.
 // This type has the same in-memory representation as the underlying integer type,
@@ -95,14 +99,6 @@ fn not_found(req: &Request) -> Template {
     Template::render("error/404", &map)
 }
 
-// 500 catch helper route
-#[catch(500)]
-fn server_error(req: &Request) -> Template {
-    let mut map = std::collections::HashMap::new();
-    map.insert("path", req.uri().path());
-    Template::render("error/500", &map)
-}
-
 fn wow_helper(
     h: &Helper,
     _: &Handlebars,
@@ -128,8 +124,8 @@ fn wow_helper(
 // }
 
 // index route which returns a static html page
-#[get("/")]
-fn index() -> Option<NamedFile> {
+#[get("/")] // <-- route attribute
+fn index() -> Option<NamedFile> { // <-- route handler
     NamedFile::open("static/index.html").ok()
 }
 
@@ -195,11 +191,11 @@ fn main() {
     // mounting each of the routes...
     .manage(HitCount(AtomicUsize::new(0)))
     //Add state to the state managed by this instance of Rocket.
-    //This method can be called any number of times as long as each call refers to a different T.
-    //Managed state can be retrieved by any request handler via the State request guard. In particular,
+    // This method can be called any number of times as long as each call refers to a different T.
+    // Managed state can be retrieved by any request handler via the State request guard. In particular,
     // if a value of type T is managed by Rocket, adding State<T> to the list of arguments
     // in a request handler instructs Rocket to retrieve the managed value
-    .register(catchers![not_found, server_error])
+    .register(catchers![not_found])
     // registering the catchers: 404 etc. we can add one here as an example.
     .attach(Template::custom(|engines| {
         engines.handlebars.register_helper("wow", Box::new(wow_helper));

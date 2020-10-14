@@ -4,6 +4,9 @@ by Caleb Trachte
 A simple web-app built with Rust, Rocket.rs, and a few basic dependencies. Meant to be used for educational purposes at Central Arkansas JavaScript's 10-15-2020 online meetup event.
 *More will be added to this readme as the app is developed*
 
+## Getting Started
+![Image of Getting Stated Documentation.](https://github.com/ctrachte/hello-rocket/getting_started.png)
+- You can also clone this repository instead of creating a new rocket.rs project
 ## Dependencies
 - rocket v"0.4.5"
 - rocket_contrib v"0.4.5"
