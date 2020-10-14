@@ -25,6 +25,10 @@ use rocket::request::{Form, FormError, FormDataError};
 use rocket_contrib::templates::{Template, handlebars};
 
 use std::sync::atomic::{AtomicUsize, Ordering};
+//An integer type which can be safely shared between threads.
+// This type has the same in-memory representation as the underlying integer type,
+// usize. For more about the differences between atomic types and non-atomic types
+ // as well as information about the portability of this type, please see the module-level documentation.
 use handlebars::{Helper, Handlebars, Context, RenderContext, Output, HelperResult, JsonRender};
 
 #[derive(Serialize)]
@@ -37,10 +41,6 @@ struct TemplateContext {
 }
 
 struct HitCount(AtomicUsize);
-//An integer type which can be safely shared between threads.
-// This type has the same in-memory representation as the underlying integer type,
-// usize. For more about the differences between atomic types and non-atomic types
- // as well as information about the portability of this type, please see the module-level documentation.
 
 #[derive(Debug, FromFormValue)]
 enum FormOption {
@@ -93,6 +93,14 @@ fn not_found(req: &Request) -> Template {
     let mut map = std::collections::HashMap::new();
     map.insert("path", req.uri().path());
     Template::render("error/404", &map)
+}
+
+// 500 catch helper route
+#[catch(500)]
+fn server_error(req: &Request) -> Template {
+    let mut map = std::collections::HashMap::new();
+    map.insert("path", req.uri().path());
+    Template::render("error/500", &map)
 }
 
 fn wow_helper(
@@ -170,6 +178,7 @@ fn count(hit_count: State<HitCount>) -> String {
     hit_count.0.load(Ordering::Relaxed).to_string()
 }
 
+// the main function of a route
 fn main() {
     rocket::ignite()
     .mount("/", routes![
@@ -190,7 +199,7 @@ fn main() {
     //Managed state can be retrieved by any request handler via the State request guard. In particular,
     // if a value of type T is managed by Rocket, adding State<T> to the list of arguments
     // in a request handler instructs Rocket to retrieve the managed value
-    .register(catchers![not_found])
+    .register(catchers![not_found, server_error])
     // registering the catchers: 404 etc. we can add one here as an example.
     .attach(Template::custom(|engines| {
         engines.handlebars.register_helper("wow", Box::new(wow_helper));
