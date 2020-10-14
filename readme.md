@@ -2,7 +2,7 @@
 by Caleb Trachte
 
 A simple web-app built with Rust, Rocket.rs, and a few basic dependencies. Meant to be used for educational purposes at Central Arkansas JavaScript's 10-15-2020 online meetup event.
-*More will be added to this readme upon completion*
+*More will be added to this readme as the app is developed*
 
 ## Dependencies
 - rocket v"0.4.5"
