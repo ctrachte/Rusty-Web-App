@@ -118,27 +118,32 @@ fn wow_helper(
 //             engines.handlebars.register_helper("wow", Box::new(wow_helper));
 //         }))
 // }
+
+// index route which returns a static html page
 #[get("/")]
 fn index() -> Option<NamedFile> {
     NamedFile::open("static/index.html").ok()
 }
 
+// this returns only a static string, a simple example
 // #[get("/hello/<name>")]
 // fn hello_name(name: &RawStr) -> String {
 //     format!("Hello, {}!", name.as_str())
 // }
 
+// this returns only a static string, a simple example
 #[get("/hello")]
 pub fn hello() -> &'static str {
     "Hello, outside world!"
 }
 
-
+// returns a static html form
 #[get("/form")]
 fn form() -> Option<NamedFile> {
     NamedFile::open("static/Form.html").ok()
 }
 
+// posts the form to a test handler
 #[post("/form", data = "<form>")]
 fn test_form(form: Result<Form<FormInput>, FormError>) -> String {
     match form {
@@ -150,6 +155,7 @@ fn test_form(form: Result<Form<FormInput>, FormError>) -> String {
     }
 }
 
+// uses our managed state to track the hit count to this route
 #[get("/visitors")]
 fn visitors(hit_count: State<HitCount>) -> content::Html<String> {
     hit_count.0.fetch_add(1, Ordering::Relaxed);
@@ -158,6 +164,7 @@ fn visitors(hit_count: State<HitCount>) -> content::Html<String> {
     content::Html(format!("{}<br /><br />{}", msg, count))
 }
 
+// helper method to return total count as a string
 #[get("/count")]
 fn count(hit_count: State<HitCount>) -> String {
     hit_count.0.load(Ordering::Relaxed).to_string()
@@ -176,8 +183,15 @@ fn main() {
         count
         ])
     .mount("/static", StaticFiles::from("static"))
+    // mounting each of the routes...
     .manage(HitCount(AtomicUsize::new(0)))
+    //Add state to the state managed by this instance of Rocket.
+    //This method can be called any number of times as long as each call refers to a different T.
+    //Managed state can be retrieved by any request handler via the State request guard. In particular,
+    // if a value of type T is managed by Rocket, adding State<T> to the list of arguments
+    // in a request handler instructs Rocket to retrieve the managed value
     .register(catchers![not_found])
+    // registering the catchers: 404 etc. we can add one here as an example.
     .attach(Template::custom(|engines| {
         engines.handlebars.register_helper("wow", Box::new(wow_helper));
     }))
